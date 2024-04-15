@@ -1,7 +1,7 @@
 import Layout from "@/components/layout/main";
-import Profile from "@/components/account/profile";
-import Category from "@/components/account/category";
-import Cards from "@/components/account/cards";
+import Profile from "@/components/accountId/profile";
+import Category from "@/components/accountId/category";
+import Cards from "@/components/accountId/cards";
 
 const Account = () => {
     return(

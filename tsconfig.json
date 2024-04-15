@@ -23,13 +23,15 @@
       "@/styles/*": ["styles/*"],
       "@/pages/*": ["pages/*"],
       "@/public/*": ["public/*"],
+      "@/types/*": ["types/*"],
+      "@/context/*": ["context/*"],
     }
   },
   "include": [
     "next-env.d.ts",
     "**/*.ts",
     "**/*.tsx"
-  ],
+, "components/accountId/cardId"  ],
   "exclude": [
     "node_modules"
   ]

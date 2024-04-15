@@ -1,5 +1,5 @@
 import Link from 'next/link';
-import styles from "@/styles/account/category.module.scss";
+import styles from "@/styles/accountId/category.module.scss";
 
 export default function Category() {
     return(

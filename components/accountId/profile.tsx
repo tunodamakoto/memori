@@ -1,4 +1,4 @@
-import styles from "@/styles/account/profile.module.scss";
+import styles from "@/styles/accountId/profile.module.scss";
 
 export default function Profile() {
     return(

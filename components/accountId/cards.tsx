@@ -1,5 +1,5 @@
 import Link from 'next/link';
-import styles from "@/styles/account/cards.module.scss";
+import styles from "@/styles/accountId/cards.module.scss";
 
 export default function Cards() {
     return(
