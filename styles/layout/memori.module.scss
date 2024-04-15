@@ -1,0 +1,16 @@
+.module{
+    padding: 0 40px;
+    width: 100vw;
+    height: calc(100vh - 89px);
+    @media screen and (max-width: 767px) {
+        padding: 0 24px;
+    }
+}
+
+.inner{
+    max-width: 684px;
+    width: 100%;
+    height: 100%;
+    margin: 0 auto;
+    position: relative;
+}

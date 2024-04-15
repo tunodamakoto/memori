@@ -1,0 +1,49 @@
+.list{
+    display: -webkit-flex;
+	display: flex;
+	-webkit-flex-direction: column;
+	flex-direction: column;
+    gap: 24px;
+    @media screen and (max-width: 767px) {
+        gap: 20px;
+    }
+}
+
+.card a{	
+    display: -webkit-flex;
+	display: flex;
+	-webkit-flex-direction: column;
+	flex-direction: column;
+	-webkit-justify-content: center;
+	justify-content: center;
+	-webkit-align-items: flex-start;
+	align-items: flex-start;
+    padding: 42px 38px 38px;
+    border-radius: 16px;
+    background-color: var(--card-bg);
+    transition: .3s;
+    @media screen and (max-width: 767px) {
+        padding: 26px 24px 20px;
+        border-radius: 8px;
+    }
+    &:hover{
+        opacity: .6;
+    }
+}
+.card .title{
+    font-size: 1.6rem;
+    font-weight: 700;
+    line-height: 1;
+    margin-bottom: 14px;
+    @media screen and (max-width: 767px) {
+        font-size: 1.4rem;
+        margin-bottom: 12px;
+    }
+}
+.card .cate{
+    font-size: 1.4rem;
+    color: var(--text-sub);
+    @media screen and (max-width: 767px) {
+        font-size: 1.2rem;
+    }
+}

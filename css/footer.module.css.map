@@ -1,0 +1,1 @@
+{"version":3,"sources":["../styles/footer.module.scss","footer.module.css"],"names":[],"mappings":"AAAA;EACI,uBAAA;EACA,kBAAA;EACA,cAAA;EACA,qCAAA;ACCJ;ADAI;EALJ;IAMQ,uBAAA;ECGN;AACF;;ADAA;EACI,iBAAA;EACA,mBAAA;ACGJ;ADFI;EAHJ;IAIQ,iBAAA;IACA,mBAAA;ECKN;AACF;;ADFA;EACI,iBAAA;ACKJ;ADJI;EAFJ;IAGQ,iBAAA;ECON;AACF","file":"footer.module.css"}

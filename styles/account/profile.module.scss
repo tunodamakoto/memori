@@ -1,0 +1,44 @@
+.module{
+    margin-bottom: 54px;
+    display: -webkit-flex;
+	display: flex;
+	-webkit-flex-direction: column;
+	flex-direction: column;
+	-webkit-align-items: center;
+	align-items: center;
+    line-height: 1;
+    @media screen and (max-width: 767px) {
+        margin-bottom: 40px;
+    }
+}
+
+.icon{
+    width: 126px;
+    height: 126px;
+    border-radius: 50%;
+    background-color: var(--account-icon-red);
+    margin-bottom: 18px;
+    @media screen and (max-width: 767px) {
+        width: 86px;
+        height: 86px;
+        margin-bottom: 12px;
+    }
+}
+
+.title{
+    font-size: 2.4rem;
+    font-weight: 700;
+    margin-bottom: 15px;
+    @media screen and (max-width: 767px) {
+        font-size: 1.8rem;
+        margin-bottom: 12px;
+    }
+}
+
+.position{
+    font-size: 1.6rem;
+    color: var(--text-sub);
+    @media screen and (max-width: 767px) {
+        font-size: 1.3rem;
+    }
+}

@@ -1,0 +1,116 @@
+.title {
+  font-size: 1.7rem;
+  font-weight: 700;
+  line-height: 1;
+  margin-bottom: 24px;
+}
+@media screen and (max-width: 767px) {
+  .title {
+    font-size: 1.6rem;
+    margin-bottom: 18px;
+  }
+}
+
+.list {
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
+}
+@media screen and (max-width: 767px) {
+  .list {
+    gap: 20px;
+  }
+}
+
+.card {
+  border: 1px solid var(--account-bar);
+  border-radius: 12px;
+}
+
+.card a {
+  padding: 24px;
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  transition: 0.3s;
+}
+@media screen and (max-width: 767px) {
+  .card a {
+    padding: 15px;
+    gap: 12px;
+  }
+}
+.card a:hover {
+  opacity: 0.6;
+}
+
+.card__icon {
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+}
+@media screen and (max-width: 767px) {
+  .card__icon {
+    width: 46px;
+    height: 46px;
+  }
+}
+
+.card__icon.red {
+  background-color: var(--account-icon-red);
+}
+
+.card__icon.yello {
+  background-color: var(--account-icon-yello);
+}
+
+.card__icon.green {
+  background-color: var(--account-icon-green);
+}
+
+.card__icon.blue {
+  background-color: var(--account-icon-blue);
+}
+
+.card__icon.pink {
+  background-color: var(--account-icon-pink);
+}
+
+.card__icon.purple {
+  background-color: var(--account-icon-purple);
+}
+
+.card__desc {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+  gap: 8px;
+  line-height: 1;
+}
+@media screen and (max-width: 767px) {
+  .card__desc {
+    gap: 8px;
+  }
+}
+
+.card__desc__name {
+  font-size: 1.6rem;
+  font-weight: 700;
+}
+@media screen and (max-width: 767px) {
+  .card__desc__name {
+    font-size: 1.4rem;
+  }
+}
+
+.card__desc__position {
+  font-size: 1.4rem;
+  color: var(--text-sub);
+}
+@media screen and (max-width: 767px) {
+  .card__desc__position {
+    font-size: 1.2rem;
+  }
+}
+/*# sourceMappingURL=accounts.module.css.map */

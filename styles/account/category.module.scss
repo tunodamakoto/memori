@@ -1,0 +1,38 @@
+.module{
+    margin-bottom: 30px;
+    overflow-x: scroll;
+    @media screen and (max-width: 767px) {
+        margin-bottom: 24px;
+    }
+}
+
+.list{
+	display: -webkit-flex;
+	display: flex;
+	-webkit-align-items: center;
+	align-items: center;
+    gap: 24px;
+    @media screen and (max-width: 767px) {
+        gap: 18px;
+    }
+}
+
+.item{
+    font-size: 1.5rem;
+    line-height: 1;
+    text-align: center;
+    white-space: nowrap;
+    @media screen and (max-width: 767px) {
+        font-size: 1.2rem;
+    }
+}
+.item.on a{
+    display: inline-block;
+    padding: 7px 12px;
+    border-radius: 16px;
+    background-color: var(--cate-on-bg);
+    color: var(--cate-on-text);
+    @media screen and (max-width: 767px) {
+        padding: 6px 12px;
+    }
+}

@@ -1,0 +1,36 @@
+.module{
+    margin-bottom: 60px;
+    text-align: center;
+    @media screen and (max-width: 767px) {
+        margin-bottom: 50px;
+    }
+}
+
+.text{
+    font-size: 1.6rem;
+    margin-bottom: 40px;
+    @media screen and (max-width: 767px) {
+        font-size: 1.4rem;
+        text-align: left;
+        margin-bottom: 34px;
+    }
+}
+
+.btn{
+    max-width: 200px;
+    width: 100%;
+    padding: 16px 0;
+    font-size: 1.6rem;
+    line-height: 1;
+    text-align: center;
+    border: 1px solid var(--btn-bar);
+    border-radius: 32px;
+    transition: .3s;
+    @media screen and (max-width: 767px) {
+        font-size: 1.5rem;
+        padding: 14px 0;
+    }
+    &:hover{
+        opacity: .6;
+    }
+}

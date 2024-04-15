@@ -1,0 +1,25 @@
+.module{
+    padding: 40px 40px 50px;
+    text-align: center;
+    line-height: 1;
+    border-top: 1px solid var(--bar-main);
+    @media screen and (max-width: 767px) {
+        padding: 34px 24px 40px;
+    }
+}
+
+.title{
+    font-size: 2.8rem;
+    margin-bottom: 16px;
+    @media screen and (max-width: 767px) {
+        font-size: 2.4rem;
+        margin-bottom: 12px;
+    }
+}
+
+.copy{
+    font-size: 1.4rem;
+    @media screen and (max-width: 767px) {
+        font-size: 1.2rem;
+    }
+}
