@@ -1,6 +1,7 @@
-import Layout from "@/components/layout/main";
+import Layout from "@/components/layout/card";
 import Head from "@/components/accountId/cardId/head";
 import Body from "@/components/accountId/cardId/body"
+import { StartBtn } from "@/components/btn";
 
 const AccountCard = () => {
     return(
@@ -8,6 +9,7 @@ const AccountCard = () => {
             <Layout>
                 <Head />
                 <Body />
+                <StartBtn />
             </Layout>
         </>
     )

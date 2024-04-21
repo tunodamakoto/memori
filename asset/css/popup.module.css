@@ -1,0 +1,232 @@
+.module {
+  width: 100vw;
+  height: 100vh;
+  position: fixed;
+  top: 0;
+  left: 0;
+  background-color: var(--popup-bg);
+}
+
+.inner {
+  width: 100%;
+  height: 100%;
+  position: relative;
+  padding: 0 40px;
+}
+
+.content {
+  max-width: 684px;
+  width: 100%;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: var(--popup-content-bg);
+  border-radius: 16px;
+  padding: 36px 40px;
+  color: var(--popup-text);
+}
+@media screen and (max-width: 767px) {
+  .content {
+    padding: 24px;
+    border-radius: 12px;
+  }
+}
+
+.title {
+  font-size: 2rem;
+  font-weight: 700;
+  text-align: center;
+  margin-bottom: 30px;
+}
+@media screen and (max-width: 767px) {
+  .title {
+    font-size: 1.8rem;
+    margin-bottom: 20px;
+  }
+}
+
+.form__input,
+.form__icon {
+  margin-bottom: 34px;
+}
+@media screen and (max-width: 767px) {
+  .form__input,
+  .form__icon {
+    margin-bottom: 24px;
+  }
+}
+
+.form__input label,
+.form__icon label {
+  display: block;
+  font-size: 1.3rem;
+  font-weight: 700;
+  line-height: 1;
+  margin-bottom: 10px;
+}
+@media screen and (max-width: 767px) {
+  .form__input label,
+  .form__icon label {
+    font-size: 1.2rem;
+    margin-bottom: 8px;
+  }
+}
+
+.form__input input {
+  display: block;
+  width: 100%;
+  border: 1px solid var(--popup-form-bar);
+  background-color: var(--popup-form-bg);
+  font-size: 1.3rem;
+  font-weight: 700;
+  line-height: 1;
+  letter-spacing: 0.08em;
+  padding: 14px 16px;
+  border-radius: 5px;
+}
+@media screen and (max-width: 767px) {
+  .form__input input {
+    padding: 12px 14px;
+    font-size: 1.2rem;
+    border-radius: 3px;
+  }
+}
+.form__input input::placeholder {
+  color: var(--text-placeholder);
+}
+.form__input input:focus {
+  outline: none;
+}
+
+.form__icon__list__outer {
+  overflow-x: scroll;
+}
+
+.form__icon__list {
+  display: -webkit-flex;
+  display: flex;
+  -webkit-align-items: center;
+  align-items: center;
+  gap: 20px;
+}
+@media screen and (max-width: 767px) {
+  .form__icon__list {
+    gap: 16px;
+  }
+}
+
+.form__icon__item {
+  min-width: 52px;
+  width: 52px;
+  height: 52px;
+  position: relative;
+}
+@media screen and (max-width: 767px) {
+  .form__icon__item {
+    min-width: 40px;
+    width: 40px;
+    height: 40px;
+  }
+}
+
+.form__icon__item input {
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  transition: 0.3s;
+}
+.form__icon__item input:not(:checked):hover {
+  opacity: 0.6;
+}
+.form__icon__item input:checked {
+  border: 5px solid var(--account-icon-bar);
+}
+@media screen and (max-width: 767px) {
+  .form__icon__item input:checked {
+    border: 3px solid var(--account-icon-bar);
+  }
+}
+.form__icon__item input:checked::after {
+  content: "";
+  display: block;
+  width: 22px;
+  height: 22px;
+  background-image: url(/account-check.svg);
+  background-size: cover;
+  position: absolute;
+  bottom: -5px;
+  right: -5px;
+}
+@media screen and (max-width: 767px) {
+  .form__icon__item input:checked::after {
+    width: 18px;
+    height: 18px;
+    bottom: -3px;
+    right: -3px;
+  }
+}
+
+.form__icon__item input.red {
+  background-color: var(--account-icon-red);
+}
+
+.form__icon__item input.yello {
+  background-color: var(--account-icon-yello);
+}
+
+.form__icon__item input.green {
+  background-color: var(--account-icon-green);
+}
+
+.form__icon__item input.blue {
+  background-color: var(--account-icon-blue);
+}
+
+.form__icon__item input.pink {
+  background-color: var(--account-icon-pink);
+}
+
+.form__icon__item input.purple {
+  background-color: var(--account-icon-purple);
+}
+
+.form__btn-col {
+  display: -webkit-flex;
+  display: flex;
+  -webkit-justify-content: center;
+  justify-content: center;
+  -webkit-align-items: center;
+  align-items: center;
+  gap: 20px;
+}
+
+.form__btn {
+  text-align: center;
+}
+
+.form__btn button {
+  display: inline-block;
+  max-width: 200px;
+  width: 100%;
+  padding: 16px 0;
+  font-size: 1.5rem;
+  line-height: 1;
+  text-align: center;
+  border: 1px solid var(--popup-form-btn-bar);
+  border-radius: 32px;
+  transition: 0.3s;
+}
+@media screen and (max-width: 767px) {
+  .form__btn button {
+    font-size: 1.5rem;
+    padding: 14px 0;
+  }
+}
+.form__btn button:hover {
+  opacity: 0.6;
+}/*# sourceMappingURL=popup.module.css.map */

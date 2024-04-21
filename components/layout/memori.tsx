@@ -1,4 +1,4 @@
-import HeaderMemori from "@/components/headerMemori";
+import { HeaderMemori } from "@/components/header";
 import styles from "@/styles/layout/memori.module.scss";
 
 export default function Layout({ children }) {

@@ -1,0 +1,113 @@
+.add {
+  width: 86px;
+  height: 86px;
+  position: fixed;
+  bottom: 60px;
+  right: 60px;
+}
+@media screen and (max-width: 767px) {
+  .add {
+    width: 56px;
+    height: 56px;
+    bottom: 24px;
+    right: 24px;
+  }
+}
+
+.add a {
+  display: block;
+  width: 100%;
+  height: 100%;
+  position: relative;
+}
+.add a::before, .add a::after {
+  content: "";
+  display: block;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+.add a::before {
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  background-color: var(--btn-bg);
+  transition: 0.3s;
+}
+.add a::after {
+  content: "";
+  display: block;
+  width: 28px;
+  height: 28px;
+  background-image: url(/add-btn.svg);
+  background-size: cover;
+}
+@media screen and (max-width: 767px) {
+  .add a::after {
+    width: 20px;
+    height: 20px;
+  }
+}
+.add a:hover::before {
+  transform: translate(-50%, -50%) scale(1.2);
+}
+
+.start {
+  display: inline-block;
+  position: sticky;
+  bottom: 60px;
+  left: 50%;
+  transform: translateX(-50%);
+  height: 86px;
+  max-width: 280px;
+  width: 100%;
+  margin-top: 60px;
+}
+@media screen and (max-width: 767px) {
+  .start {
+    height: 56px;
+    max-width: 146px;
+    bottom: 24px;
+    margin-top: 30px;
+  }
+}
+
+.start a {
+  width: 100%;
+  height: 100%;
+  display: -webkit-flex;
+  display: flex;
+  -webkit-justify-content: center;
+  justify-content: center;
+  -webkit-align-items: center;
+  align-items: center;
+  font-size: 1.8rem;
+  position: relative;
+}
+@media screen and (max-width: 767px) {
+  .start a {
+    font-size: 1.6rem;
+  }
+}
+.start a::before {
+  content: "";
+  display: block;
+  width: 100%;
+  height: 100%;
+  border-radius: 46px;
+  background-color: var(--btn-bg);
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  transition: 0.3s;
+  z-index: 1;
+}
+.start a:hover::before {
+  transform: translate(-50%, -50%) scale(1.2);
+}
+
+.start a span {
+  z-index: 2;
+}/*# sourceMappingURL=btn.module.css.map */

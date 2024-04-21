@@ -15,7 +15,6 @@
   width: 126px;
   height: 126px;
   border-radius: 50%;
-  background-color: var(--account-icon-red);
   margin-bottom: 18px;
 }
 @media screen and (max-width: 767px) {
@@ -26,6 +25,30 @@
   }
 }
 
+.icon.red {
+  background-color: var(--account-icon-red);
+}
+
+.icon.yello {
+  background-color: var(--account-icon-yello);
+}
+
+.icon.green {
+  background-color: var(--account-icon-green);
+}
+
+.icon.blue {
+  background-color: var(--account-icon-blue);
+}
+
+.icon.pink {
+  background-color: var(--account-icon-pink);
+}
+
+.icon.purple {
+  background-color: var(--account-icon-purple);
+}
+
 .title {
   font-size: 2.4rem;
   font-weight: 700;
@@ -34,7 +57,7 @@
 @media screen and (max-width: 767px) {
   .title {
     font-size: 1.8rem;
-    margin-bottom: 4px;
+    margin-bottom: 12px;
   }
 }
 

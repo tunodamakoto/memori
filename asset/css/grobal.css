@@ -2,8 +2,15 @@
 -------------------------------*/
 :root {
   --base-bg: #272D44;
+  --popup-bg: rgba(39,45,68,0.8);
+  --popup-content-bg: #fff;
+  --popup-text: #272D44;
+  --popup-form-bg: #fff;
+  --popup-form-bar: #272D44;
+  --popup-form-btn-bar: #272D44;
   --text-main: #fff;
   --text-sub: #A9ABB4;
+  --text-placeholder: #A9ABB4;
   --bar-main: #fff;
   --btn-bar: #fff;
   --account-bar: #fff;
@@ -14,6 +21,8 @@
   --switch-bg: #4A4F62;
   --switch-thum: #798EE6;
   --cancel-bar: #fff;
+  --btn-bg: #131622;
+  --account-icon-bar: #77ADED;
   --account-icon-red: #BF7474;
   --account-icon-yello: #C4C651;
   --account-icon-green: #77BB6C;

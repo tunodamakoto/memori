@@ -89,4 +89,24 @@
 
 .bread__item a .icon.red {
   background-color: var(--account-icon-red);
+}
+
+.bread__item a .icon.yello {
+  background-color: var(--account-icon-yello);
+}
+
+.bread__item a .icon.green {
+  background-color: var(--account-icon-green);
+}
+
+.bread__item a .icon.blue {
+  background-color: var(--account-icon-blue);
+}
+
+.bread__item a .icon.pink {
+  background-color: var(--account-icon-pink);
+}
+
+.bread__item a .icon.purple {
+  background-color: var(--account-icon-purple);
 }/*# sourceMappingURL=headerBread.module.css.map */
