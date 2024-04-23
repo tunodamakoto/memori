@@ -5,7 +5,7 @@ import FadeTransition from "@/components/animation/FadeTransition";
 
 export default function Question(props) {
 
-    const {questionValue, handleChangeValue} = props;
+    const {questionValue, handleQuestionValue} = props;
 
     const [ height, setHeight ] = useState(0);
 
@@ -36,7 +36,7 @@ export default function Question(props) {
                     ref={ textAreaRef }
                     value={ questionValue }
                     placeholder="問題を記入" 
-                    onChange={handleChangeValue}
+                    onChange={handleQuestionValue}
                     onKeyDown={handleKeyDown}
                     style={{ height: height ? `${height}px` : '42px' }} 
                 ></textarea>

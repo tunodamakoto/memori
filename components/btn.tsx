@@ -1,7 +1,7 @@
 import styles from "@/styles/btn.module.scss";
 import Link from 'next/link';
 import { useAuth } from "@/context/auth";
-import { addDoc, arrayUnion, collection, doc, getDoc, getDocs, query, setDoc, updateDoc } from "firebase/firestore";
+import { addDoc, arrayUnion, collection, doc, getDoc, getDocs, onSnapshot, query, setDoc, updateDoc, where } from "firebase/firestore";
 import { db } from "@/libs/firebase";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
@@ -16,11 +16,9 @@ export const AddBtn = () => {
 
     const addBtn = async () => {
         if(user !== undefined || user !== null){
-            await updateDoc(doc(db, "memores", user.userId), {
-                memori: arrayUnion({
-                    id: uuid,
-                    userId: user.userId,
-                })
+            await setDoc(doc(db, "memores", uuid), {
+                id: uuid,
+                userId: user.userId
             })
             router.push(`/edit/${user.userId}/${uuid}`);
         }
@@ -45,40 +43,74 @@ export const StartBtn = () => {
     )
 }
 
-export const EditNextBtn = (props) => {
+export const EditBackBtn = (props) => {
 
-    const {contentState, switchAnswer} = props;
+    const {contentState, switchQuestion, switchAnswer} = props;
 
     return(
         <>
-            <FadeTransition show={contentState === "question"}>
-                <div className={styles.editNext}>
-                    <button onClick={switchAnswer}></button>
+            <FadeTransition show={contentState === "answer"}>
+                <div className={`${styles.editBack} ${styles.editBtn}`}>
+                    <button onClick={switchQuestion}></button>
                 </div>
             </FadeTransition>
-            <FadeTransition show={contentState === "answer"}>
-                <div className={styles.editNext}>
-                    <button></button>
+            <FadeTransition show={contentState === "setting"}>
+                <div className={`${styles.editBack} ${styles.editBtn}`}>
+                    <button onClick={switchAnswer}></button>
                 </div>
             </FadeTransition>
         </>
     )
 }
 
-export const EditBtn = () => {
+export const EditNextBtn = (props) => {
+
+    const {contentState, switchAnswer, switchSetting} = props;
+
     return(
-        <div className={styles.edit}>
-            <div className={styles["edit__inner"]}>
-                <div className={styles["edit__back"]}>
-                    <button></button>
+        <>
+            <FadeTransition show={contentState === "question"}>
+                <div className={`${styles.editNext} ${styles.editBtn}`}>
+                    <button onClick={switchAnswer}></button>
                 </div>
-                <div className={styles["edit__release"]}>
-                    <button><span>RELEASE</span></button>
+            </FadeTransition>
+            <FadeTransition show={contentState === "answer"}>
+                <div className={`${styles.editNext} ${styles.editBtn}`}>
+                    <button onClick={switchSetting}></button>
                 </div>
-                <div className={styles["edit__next"]}>
-                    <button></button>
-                </div>
-            </div>
+            </FadeTransition>
+        </>
+    )
+}
+
+export const EditReleaseBtn = (props) => {
+
+    const {editId, questionValue, answerValues, smallCateValue, bigCateValue, setQuestionValue, setAnswerValues, setSmallCateValue, setBigCateValue} = props;
+
+    const user = useAuth();
+
+    const router = useRouter();
+
+    const handleSubmit = async () => {
+        let result = confirm("MEMORIを作成してもいいでしょうか？");
+        if(result){
+            await updateDoc(doc(db, "memores", editId.editId),{
+                question: questionValue,
+                answer: answerValues,
+                smallCate: smallCateValue,
+                bigCate: bigCateValue,
+            })
+            setQuestionValue("");
+            setAnswerValues([]);
+            setSmallCateValue("");
+            setBigCateValue("");
+            router.push(`/${user.userId}`);
+        }
+    }
+
+    return(
+        <div className={styles.editRelease}>
+            <button onClick={handleSubmit}><span>RELEASE</span></button>
         </div>
     )
 }

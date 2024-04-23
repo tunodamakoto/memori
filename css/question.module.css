@@ -1,16 +1,7 @@
 .module {
   width: 100%;
-  position: absolute;
-  top: 42%;
-  left: 50%;
-  transform: translate(-50%, -50%);
   text-align: center;
   line-height: 1;
-}
-@media screen and (max-width: 767px) {
-  .module {
-    top: 44%;
-  }
 }
 
 .textarea {
