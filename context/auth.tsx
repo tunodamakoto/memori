@@ -10,6 +10,8 @@ import {
   useEffect,
   useState,
 } from "react";
+import Layout from "@/components/layout/loading";
+import styles from "@/styles/layout/loading.module.scss";
 
 type UserContextType = User | null | undefined;
 
@@ -17,6 +19,7 @@ const AuthContext = createContext<UserContextType>(undefined);
 
 export const AuthProvider = ({ children }: { children: ReactNode }) => {
     const [user, setUser] = useState<UserContextType>();
+    const [loading, setLoading] = useState(true);
 
     useEffect(() => {
         const unsubscribe = onAuthStateChanged(auth, async (firebaseUser) => {
@@ -30,9 +33,20 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
             } else {
                 setUser(null);
             }
+            setLoading(false);
         });
         return unsubscribe;
     }, []);
+
+    if (loading) {
+        return (
+            <>
+                <Layout>
+                    <div className={styles.load}>Loading...</div>
+                </Layout>
+            </>
+        )
+    }
 
     return <AuthContext.Provider value={user}>{children}</AuthContext.Provider>;
 };

@@ -1,10 +1,23 @@
 import Link from 'next/link';
+import Image from "next/image";
 import styles from "@/styles/accountId/category.module.scss";
+import setting from "@/public/setting.svg";
+import { useAuth } from '@/context/auth';
+import { useRouter } from 'next/router';
 
 export default function Category() {
+
+    const user = useAuth();
+    const router = useRouter();
+
     return(
         <div className={styles.module}>
             <ul className={styles.list}>
+                {user.userId === router.query.accountId && (
+                    <li className={`${styles.item} ${styles["item-setting"]}`}>
+                        <Image src={setting} alt="" />
+                    </li>
+                )}
                 <li className={`${styles.item} ${styles.on}`}>
                     <Link href="#">全て</Link>
                 </li>

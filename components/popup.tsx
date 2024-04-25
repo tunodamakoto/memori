@@ -41,10 +41,6 @@ export const SignInAccountSetting = () => {
                 });
             });
 
-            await setDoc(doc(db, "memores", userId),{
-                memori: arrayUnion({})
-            })
-
             setFormType("confirm");
         } else {
             alert("未記入のフォームがあります。");
