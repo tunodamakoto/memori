@@ -4,7 +4,6 @@
   position: fixed;
   top: 0;
   left: 0;
-  background-color: var(--popup-bg);
   z-index: 9999;
 }
 
@@ -13,6 +12,17 @@
   height: 100%;
   position: relative;
   padding: 0 40px;
+}
+
+.bg {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: var(--popup-bg);
+  z-index: 1000;
 }
 
 .content {
@@ -26,9 +36,11 @@
   border-radius: 16px;
   padding: 36px 40px;
   color: var(--popup-text);
+  z-index: 1001;
 }
 @media screen and (max-width: 767px) {
   .content {
+    max-width: calc(100% - 48px);
     padding: 24px;
     border-radius: 12px;
   }
@@ -48,11 +60,15 @@
 }
 
 .form__input,
+.form__textarea,
+.form__select,
 .form__icon {
   margin-bottom: 34px;
 }
 @media screen and (max-width: 767px) {
   .form__input,
+.form__textarea,
+.form__select,
 .form__icon {
     margin-bottom: 24px;
   }
@@ -100,6 +116,36 @@
   color: var(--text-placeholder);
 }
 .form__input input:focus {
+  outline: none;
+}
+
+.form__textarea textarea {
+  display: block;
+  width: 100%;
+  height: 160px;
+  border: 1px solid var(--popup-form-bar);
+  background-color: var(--popup-form-bg);
+  font-size: 1.3rem;
+  font-weight: 700;
+  line-height: 2;
+  letter-spacing: 0.08em;
+  padding: 10px 16px;
+  border-radius: 5px;
+}
+@media screen and (max-width: 767px) {
+  .form__textarea textarea {
+    padding: 12px 14px;
+    font-size: 1.2rem;
+    border-radius: 3px;
+  }
+}
+.form__textarea textarea::-moz-placeholder {
+  color: var(--text-placeholder);
+}
+.form__textarea textarea::placeholder {
+  color: var(--text-placeholder);
+}
+.form__textarea textarea:focus {
   outline: none;
 }
 
@@ -195,6 +241,59 @@
 
 .form__icon__item input.purple {
   background-color: var(--account-icon-purple);
+}
+
+.form__select {
+  position: relative;
+  width: 100%;
+  height: 54px;
+}
+@media screen and (max-width: 767px) {
+  .form__select {
+    height: 50px;
+  }
+}
+.form__select::after {
+  content: "";
+  display: block;
+  width: 24px;
+  height: 24px;
+  background-image: url(/modal-arrow.svg);
+  background-size: cover;
+  position: absolute;
+  top: 50%;
+  right: 20px;
+  transform: translateY(-50%);
+}
+@media screen and (max-width: 767px) {
+  .form__select::after {
+    width: 20px;
+    height: 24px;
+    right: 18px;
+  }
+}
+
+.form__select select {
+  -webkit-appearance: none;
+     -moz-appearance: none;
+          appearance: none;
+  width: 100%;
+  height: 100%;
+  padding: 16px 20px;
+  border: 1px solid #272D44;
+  border-radius: 6px;
+  font-size: 1.4rem;
+  line-height: 1;
+  cursor: pointer;
+}
+@media screen and (max-width: 767px) {
+  .form__select select {
+    padding: 15px 18px;
+    font-size: 1.3rem;
+  }
+}
+.form__select select:focus {
+  outline: none;
 }
 
 .form__btn-col {

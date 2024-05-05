@@ -94,7 +94,7 @@ export const HeaderBread = () => {
 
     useEffect(() => {
         const URL = router.asPath.replace(/^\/(.*?)\/?/, '');
-        const url = URL.replace(/\/\d+$/, '');
+        const url = URL.split('/')[0];
         const getUsers = async () => {
             const q = query(collection(db, "users"), where("userId", "==", url ));
             const usersSnapshot = await getDocs(q);
@@ -151,17 +151,25 @@ export const HeaderEdit = ({ contentState }) => {
                 </div>
             </div>
         </FadeTransition>
+        <FadeTransition show={contentState === "category"}>
+            <div className={styles.headerEdit}>
+                <div className={styles["headerEdit__inner"]}>
+                    <button className={styles["headerEdit__cancel"]}></button>
+                    <p className={styles["headerEdit__text"]}>カテゴリーの編集</p>
+                </div>
+            </div>
+        </FadeTransition>
         </>
     )
 }
 
 
-export const HeaderMemori = () => {
+export const HeaderMemori = ({ card }) => {
     return(
         <div className={styles.headerMemori}>
             <div className={styles["headerMemori__inner"]}>
                 <button className={styles["headerMemori__cancel"]}></button>
-                <p className={styles["headerMemori__text"]}>原理・研究法・歴史（心理学検定）</p>
+                <p className={styles["headerMemori__text"]}>{card.name}（{card.category.name}）</p>
             </div>
         </div>
     )    

@@ -1,2 +1,2 @@
-.module{width:100%;position:absolute;top:42%;left:50%;transform:translate(-50%, -50%);text-align:center;line-height:1}@media screen and (max-width: 767px){.module{top:44%}}.title{font-size:2.4rem;font-weight:700;line-height:1;letter-spacing:.16em;margin-bottom:40px}@media screen and (max-width: 767px){.title{font-size:1.8rem;margin-bottom:30px}}.page{font-size:1.7rem}@media screen and (max-width: 767px){.page{font-size:1.4rem}}
+.module{padding:160px 40px;width:100vw}@media screen and (max-width: 767px){.module{padding:80px 24px 120px}}.inner{max-width:684px;width:100%;margin:0 auto;position:relative}
 /*# sourceMappingURL=memori.module.min.css.map */

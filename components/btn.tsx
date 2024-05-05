@@ -18,7 +18,11 @@ export const AddBtn = () => {
         if(user !== undefined || user !== null){
             await setDoc(doc(db, "memores", uuid), {
                 id: uuid,
-                userId: user.userId
+                userId: user.userId,
+                question: "",
+                answer: [],
+                card: {},
+                category: {},
             })
             router.push(`/edit/${user.userId}/${uuid}`);
         }
@@ -35,10 +39,25 @@ export const AddBtn = () => {
     )
 }
 
-export const StartBtn = () => {
+export const StartBtn = ({ memores, card }) => {
+
+    const [data, setData] = useState(memores);
+    const router = useRouter();
+
+    const handleMemoriShuffle = () => {
+        const newData = [...data];
+        for (let i = newData.length - 1; i > 0; i--) {
+            const j = Math.floor(Math.random() * (i + 1));
+            [newData[i], newData[j]] = [newData[j], newData[i]];
+        }
+        setData(newData);
+        localStorage.setItem('memores', JSON.stringify(newData));
+        router.push(`/memori/${newData[0].id}`)
+    }
+
     return(
         <div className={styles.start}>
-            <Link href="#"><span>START</span></Link>            
+            <button onClick={handleMemoriShuffle}><span>START</span></button>            
         </div>
     )
 }
@@ -85,32 +104,101 @@ export const EditNextBtn = (props) => {
 
 export const EditReleaseBtn = (props) => {
 
-    const {editId, questionValue, answerValues, smallCateValue, bigCateValue, setQuestionValue, setAnswerValues, setSmallCateValue, setBigCateValue} = props;
+    const {editId, questionValue, answerValues, card, setQuestionValue, setAnswerValues, setCard} = props;
 
     const user = useAuth();
 
     const router = useRouter();
 
     const handleSubmit = async () => {
-        let result = confirm("MEMORIを作成してもいいでしょうか？");
-        if(result){
-            await updateDoc(doc(db, "memores", editId.editId),{
-                question: questionValue,
-                answer: answerValues,
-                smallCate: smallCateValue,
-                bigCate: bigCateValue,
-            })
-            setQuestionValue("");
-            setAnswerValues([]);
-            setSmallCateValue("");
-            setBigCateValue("");
-            router.push(`/${user.userId}`);
+        if(card.id === undefined && card.name === undefined){
+            alert("カテゴリーを選択してください。")
+            return;
+        } else {
+            let result = confirm("MEMORIを作成してもいいでしょうか？");
+            if(result){
+                await updateDoc(doc(db, "memores", editId),{
+                    question: questionValue,
+                    answer: answerValues,
+                    card: {id: card.id, name: card.name},
+                    category: {id: card.category_id, name: card.category_name},
+                })
+                const q = query(collection(db, "memores"));
+                const memoresSnapShot = await getDocs(q);
+                const memoresData = memoresSnapShot.docs.map(doc => doc.data());
+                const userMemori = memoresData.filter(data => data.userId === user.userId);
+                const count = userMemori.filter(data => data.card.id === card.id).length;
+                await updateDoc(doc(db, "cards", card.id),{
+                    memori_num: count,
+                })
+                setQuestionValue("");
+                setAnswerValues([]);
+                setCard([]);
+                router.push(`/${user.userId}`);
+            }
         }
     }
 
     return(
         <div className={styles.editRelease}>
             <button onClick={handleSubmit}><span>RELEASE</span></button>
+        </div>
+    )
+}
+
+export const MemoriNextBtn = ({ nextMemori }) => {
+
+    const router = useRouter();
+
+    const handleNextMemori = () => {
+        router.push(`/memori/${nextMemori.id}`);
+    }
+
+    return (
+        <div className={`${styles.memoriBtn} ${styles["memoriBtn-next"]}`}>
+            <button onClick={handleNextMemori}></button>
+        </div>
+    )
+}
+
+export const MemoriBackBtn = ({ previousMemori }) => {
+
+    const router = useRouter();
+
+
+    const handleBackMemori = () => {
+        router.push(`/memori/${previousMemori.id}`);
+    }
+
+    return (
+        <div className={`${styles.memoriBtn} ${styles["memoriBtn-back"]}`}>
+            <button onClick={handleBackMemori}></button>
+        </div>
+    )
+}
+
+export const MemoriOpenBtn = ({ setMemoriOpen }) => {
+
+    const handleOpenMemori = () => {
+        setMemoriOpen(true);
+    }
+
+    return (
+        <div className={`${styles.memoriBtn} ${styles["memoriBtn-open"]}`}>
+            <button onClick={handleOpenMemori}></button>
+        </div>
+    )
+}
+
+export const MemoriCloseBtn = ({ setMemoriOpen }) => {
+
+    const handleCloseMemori = () => {
+        setMemoriOpen(false);
+    }
+
+    return (
+        <div className={`${styles.memoriBtn} ${styles["memoriBtn-close"]}`}>
+            <button onClick={handleCloseMemori}></button>
         </div>
     )
 }

@@ -15,7 +15,9 @@ export default function Category() {
             <ul className={styles.list}>
                 {user.userId === router.query.accountId && (
                     <li className={`${styles.item} ${styles["item-setting"]}`}>
-                        <Image src={setting} alt="" />
+                        <Link href="/edit/category">
+                            <Image src={setting} alt="" />
+                        </Link>
                     </li>
                 )}
                 <li className={`${styles.item} ${styles.on}`}>

@@ -6,7 +6,6 @@ import FadeTransition from "@/components/animation/FadeTransition";
 export default function Answer(props) {
 
     const {questionValue, answerValues, setAnswerValues, handleAnswerValue} = props;
-
     let addJudge = false;
 
     const textAreaRef = useRef(null);
@@ -48,9 +47,18 @@ export default function Answer(props) {
         }
     }
 
-    const handleTextareaHeight = (e) => {
+    const handleTextareaHeight = (e, id) => {
         e.target.style.height = 'auto';
         e.target.style.height = e.target.scrollHeight + 'px';
+        const newHeight = e.target.scrollHeight;
+        setAnswerValues(prevValues => {
+            return( prevValues.map(value => {
+                if(value.id === id) {
+                    return { ...value, height: newHeight };
+                }
+                return value;
+            }))
+        });
     }
 
     return(
@@ -63,12 +71,14 @@ export default function Answer(props) {
                             <textarea
                                 ref={textAreaRef}
                                 value={answerValue.value}
-                                onChange={e => { handleAnswerValue(answerValue.id, e.target.value); handleTextareaHeight(e); }}
+                                onChange={e => {
+                                    handleAnswerValue(answerValue.id, e.target.value);
+                                    handleTextareaHeight(e, answerValue.id);
+                                }}
                                 onKeyDown={(e) => handleKeyDown(e, answerValue.id)}
                                 placeholder="解答を記入"
                                 style={{ height: answerValue.height ? `${answerValue.height}px` : '40px' }}
-                            >
-                            </textarea>
+                            ></textarea>
                         </div>
                     ))}
                 </div>

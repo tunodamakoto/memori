@@ -5,7 +5,7 @@ export default function Layout({ children, contentState }) {
     return (
         <>
             <HeaderEdit contentState={contentState} />
-            <main className={`${styles.module} ${contentState === "setting" ? styles.setting : ""}`}>
+            <main className={`${styles.module} ${contentState === "setting" ? styles.setting : ""} ${contentState === "category" ? styles.category : ""}`}>
                 <div className={styles.inner}>
                     { children }
                 </div>

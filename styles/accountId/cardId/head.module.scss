@@ -1,11 +1,108 @@
-.title{
+.head{
+    display: -webkit-flex;
+	display: flex;
+	-webkit-justify-content: space-between;
+	justify-content: space-between;
+	-webkit-align-items: center;
+	align-items: center;
+    margin-bottom: 24px;
+    position: relative;
+    @media screen and (max-width: 767px) {
+        margin-bottom: 16px;
+    }
+}
+.head__title{
     font-size: 2.1rem;
     font-weight: 700;
     line-height: 1;
-    margin-bottom: 24px;
     @media screen and (max-width: 767px) {
         font-size: 1.6rem;
-        margin-bottom: 16px;
+    }
+}
+.head__edit{
+    width: 40px;
+    height: 40px;
+    position: relative;
+    @media screen and (max-width: 767px) {
+        width: 30px;
+        height: 30px;
+    }
+    &::before{
+        content: "";
+        display: block;
+        width: 24px;
+        height: 3.7px;
+        background-image: url(/dots.svg);
+        background-size: cover;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        transition: .3s;
+        @media screen and (max-width: 767px) {
+            width: 19px;
+            height: 3px;
+        }
+    }
+}
+.head__edit.on{
+    &::before{
+        background-image: url(/dots-bl.svg);
+    }
+}
+.head__nav{
+    position: absolute;
+    top: 42px;
+    right: 0;
+    padding: 24px 36px;
+    background-color: #131622;
+    border-radius: 16px;
+    display: -webkit-flex;
+	display: flex;
+	-webkit-flex-direction: column;
+	flex-direction: column;
+	-webkit-justify-content: center;
+	justify-content: center;
+	-webkit-align-items: center;
+	align-items: center;
+    gap: 10px;
+    @media screen and (max-width: 767px) {
+        border-radius: 12px;
+        padding: 20px 30px;
+        gap: 8px;
+    }
+}
+.head__nav__item{
+    font-size: 1.4rem;
+    display: -webkit-flex;
+	display: flex;
+	-webkit-align-items: center;
+	align-items: center;
+    gap: 12px;
+    @media screen and (max-width: 767px) {
+        font-size: 1.3rem;
+        gap: 10px;
+    }
+    &::before{
+        content: "";
+        display: block;
+        width: 20px;
+        height: 20px;
+        background-size: cover;
+        @media screen and (max-width: 767px) {
+            width: 18px;
+            height: 18px;
+        }
+    }
+}
+.head__nav__item-edit{
+    &::before{
+        background-image: url(/pen.svg);
+    }
+}
+.head__nav__item-delete{
+    &::before{
+        background-image: url(/trash.svg);
     }
 }
 

@@ -50,89 +50,71 @@
     }
 }
 
-.form__select{
-    margin-bottom: 50px;
+.form__radio__list{
+    display: -webkit-flex;
+	display: flex;
+	-webkit-flex-wrap: wrap;
+	flex-wrap: wrap;
+    gap: 24px 16px;
     @media screen and (max-width: 767px) {
-        margin-bottom: 40px;
+        gap: 20px 16px;
     }
 }
-.form__label{
-    display: block;
-    font-size: 1.4rem;
-    font-weight: 700;
+
+.form__radio__item label{
+    font-size: 1.3rem;
     line-height: 1;
-    margin-bottom: 18px;
+    padding: 7px 16px;
+    border: 1px solid #fff;
+    border-radius: 24px;
+    transition: .3s;
     @media screen and (max-width: 767px) {
-        font-size: 1.3rem;
-        margin-bottom: 14px;
+        font-size: 1.2rem;
+        padding: 6px 14px;
+    }
+    &:hover{
+        background-color: #fff;
+        color: #272D44;
+    }
+    &:has(:checked){
+        background-color: #fff;
+        color: #272D44;
     }
 }
-.form__select__inner{
-    position: relative;
-    width: 100%;
-    height: 60px;
-    @media screen and (max-width: 767px) {
-        height: 50px;
-    }
-    &::after{
-        content: "";
-        display: block;
-        width: 26px;
-        height: 26px;
-        background-image: url(/modal-arrow.svg);
-        background-size: cover;
-        position: absolute;
-        top: 50%;
-        right: 20px;
-        transform: translateY(-50%);
-        @media screen and (max-width: 767px) {
-            width: 24px;
-            height: 24px;
-            right: 18px;
-        }
-    }
-}
-.form__select__inner select{
-    appearance: none;
-    width: 100%;
-    height: 100%;
-    padding: 18px 20px;
-    border: 1px solid var(--bar-main);
-    border-radius: 8px;
-    font-size: 1.4rem;
-    line-height: 1;
-    cursor: pointer;
-    @media screen and (max-width: 767px) {
-        padding: 15px 18px;
-        border-radius: 6px;
-        font-size: 1.3rem;
-    }
-    &:focus{
-        outline: none;
-    }
-}
-.form__input{
-    margin-top: 30px;
+
+.form__radio__add{
+    margin-top: 34px;
+    text-align: center;
     @media screen and (max-width: 767px) {
         margin-top: 24px;
     }
 }
-.form__input input{
-    display: block;
-    width: 100%;
-    background-color: transparent;
-    border: 1px solid var(--bar-main);
-    font-size: 1.4rem;
-    line-height: 1;
-    padding: 18px 20px;
-    border-radius: 8px;
+.form__radio__add button{
+    width: 72px;
+    height: 30px;
+    border-radius: 24px;
+    background-color: var(--btn-bar);
+    position: relative;
+    cursor: pointer;
     @media screen and (max-width: 767px) {
-        padding: 15px 18px;
+        width: 46px;
+        height: 22px;
+        border-radius: 12px;
     }
-    &::placeholder{
-        color: var(--text-placeholder);
-    }
-    &:focus{
-        outline: none;
+    &::before{
+        content: "";
+        display: block;
+        width: 14px;
+        height: 14px;
+        background-image: url(/add-btn-bl.svg);
+        background-size: cover;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        @media screen and (max-width: 767px) {
+            width: 8px;
+            height: 8px;
+        }
     }
 }

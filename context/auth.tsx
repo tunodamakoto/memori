@@ -3,6 +3,7 @@ import { User } from "@/types/user";
 import { onAuthStateChanged } from "firebase/auth";
 import { collection, doc, getDoc, getDocs, query, where } from "firebase/firestore";
 import { useRouter } from "next/router";
+import { ZenKakuGothicNew } from "@/styles/font";
 import {
   ReactNode,
   createContext,
@@ -42,7 +43,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
         return (
             <>
                 <Layout>
-                    <div className={styles.load}>Loading...</div>
+                    <div className={`${styles.load} ${ZenKakuGothicNew.className}`}>Loading...</div>
                 </Layout>
             </>
         )

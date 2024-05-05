@@ -17,6 +17,15 @@
   }
 }
 
+.module.setting {
+  padding: 80px 40px 160px;
+}
+@media screen and (max-width: 767px) {
+  .module.setting {
+    padding: 40px 24px 120px;
+  }
+}
+
 .inner {
   max-width: 684px;
   width: 100%;

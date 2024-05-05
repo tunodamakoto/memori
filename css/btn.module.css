@@ -81,7 +81,8 @@
   }
 }
 
-.start a {
+.start a,
+.start button {
   width: 100%;
   height: 100%;
   display: flex;
@@ -91,11 +92,13 @@
   position: relative;
 }
 @media screen and (max-width: 767px) {
-  .start a {
+  .start a,
+.start button {
     font-size: 1.6rem;
   }
 }
-.start a::before {
+.start a::before,
+.start button::before {
   content: "";
   display: block;
   width: 100%;
@@ -109,10 +112,12 @@
   transition: 0.3s;
   z-index: 1;
 }
-.start a:hover::before {
+.start a:hover::before,
+.start button:hover::before {
   transform: translate(-50%, -50%) scale(1.2);
 }
 
+.start a span,
 .start a span {
   z-index: 2;
 }
@@ -394,5 +399,96 @@
 
 .edit__release button span {
   z-index: 2;
+}
+
+.memoriBtn {
+  width: 86px;
+  height: 86px;
+  position: fixed;
+  bottom: 60px;
+}
+@media screen and (max-width: 767px) {
+  .memoriBtn {
+    width: 56px;
+    height: 56px;
+    bottom: 24px;
+  }
+}
+
+.memoriBtn button {
+  width: 100%;
+  height: 100%;
+  position: relative;
+}
+.memoriBtn button::before, .memoriBtn button::after {
+  content: "";
+  display: block;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+.memoriBtn button::before {
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  background-color: var(--btn-bg);
+  transition: 0.3s;
+}
+.memoriBtn button::after {
+  content: "";
+  display: block;
+  width: 28px;
+  height: 28px;
+  background-size: cover;
+}
+@media screen and (max-width: 767px) {
+  .memoriBtn button::after {
+    width: 20px;
+    height: 20px;
+  }
+}
+.memoriBtn button:hover::before {
+  transform: translate(-50%, -50%) scale(1.2);
+}
+
+.memoriBtn-back {
+  left: 60px;
+}
+@media screen and (max-width: 767px) {
+  .memoriBtn-back {
+    left: 24px;
+  }
+}
+
+.memoriBtn-back button::after {
+  background-image: url(/arrow-back.svg);
+}
+
+.memoriBtn-next {
+  right: 60px;
+}
+@media screen and (max-width: 767px) {
+  .memoriBtn-next {
+    right: 24px;
+  }
+}
+
+.memoriBtn-next button::after {
+  background-image: url(/arrow-next.svg);
+}
+
+.memoriBtn-open,
+.memoriBtn-close {
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.memoriBtn-open button::after {
+  background-image: url(/open.svg);
+}
+
+.memoriBtn-close button::after {
+  background-image: url(/close.svg);
 }
 /*# sourceMappingURL=btn.module.css.map */

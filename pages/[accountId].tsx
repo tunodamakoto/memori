@@ -10,13 +10,14 @@ import { useEffect, useState } from "react";
 const Account = (props) => {
     
     const user = props.user;
+    const categories = props.categories;
+    const cards = props.cards;
 
     return(
         <>
             <Layout>
                 <Profile user={user} />
-                <Category />
-                <Cards />
+                <Cards categories={categories} cards={cards} />
             </Layout>
         </>
     )
@@ -35,9 +36,17 @@ export const getStaticProps = async (context) => {
     const userRef = doc(db, "users", accountId);
     const userSnap = await getDoc(userRef);
     const user = userSnap.exists() ? userSnap.data() : null;
+    const categoriesSnapShot = await getDocs(query(collection(db, "categories")));
+    const cateogriesData = categoriesSnapShot.docs.map(doc => doc.data());
+    const categories = cateogriesData.filter(data => data.userId === accountId);
+    const cardsSnapShot = await getDocs(query(collection(db, "cards")));
+    const cardsData = cardsSnapShot.docs.map(doc => doc.data());
+    const cards = cardsData.filter(data => data.userId === accountId);
     return {
         props: {
             user: user,
+            categories: categories,
+            cards: cards,
         }
     }
 }

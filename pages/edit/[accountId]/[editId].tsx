@@ -10,15 +10,16 @@ import { EditNextBtn, EditBackBtn, EditReleaseBtn } from "@/components/btn";
 import Answer from "@/components/edit/answer";
 import Setting from "@/components/edit/setting";
 
-const EditId = (editId) => {
-    console.log(editId);
+const EditId = (props) => {
 
-    const [questionValue, setQuestionValue] = useState("");
-    const [answerValues, setAnswerValues] = useState([{ id: 1, value: "", height: 40 }]);
-    const [smallCateValue, setSmallCateValue] = useState("");
-    const [bigCateValue, setBigCateValue] = useState("");
+    const editId = props.editId;
+    const memori = props.memori;
 
-    const [nextShow, setNextShow] = useState(false);
+    const [questionValue, setQuestionValue] = useState(memori?.question);
+    const [answerValues, setAnswerValues] = useState(memori.answer.length === 0 ? [{ id: 1, value: "", height: 40 }] : memori.answer);
+    const [card, setCard] = useState({id: memori?.card.id, name: memori?.card.name, category_id: memori?.category.id, category_name: memori?.category.name});
+
+    const [nextShow, setNextShow] = useState(!!memori.question);
     const [backShow, setBackShow] = useState(false);
     const [releaseShow, setRelease] = useState(false);
 
@@ -83,7 +84,7 @@ const EditId = (editId) => {
                     <Answer questionValue={questionValue} answerValues={answerValues} setAnswerValues={setAnswerValues} handleAnswerValue={handleAnswerValue} />
                 </FadeTransition>
                 <FadeTransition show={contentState === "setting"}>
-                    <Setting smallCateValue={smallCateValue} setSmallCateValue={setSmallCateValue} bigCateValue={bigCateValue} setBigCateValue={setBigCateValue} questionValue={questionValue} answerValues={answerValues} setRelease={setRelease} />
+                    <Setting questionValue={questionValue} answerValues={answerValues} card={card} setCard={setCard} setRelease={setRelease} />
                 </FadeTransition>
                 <FadeTransition show={backShow}>
                     <EditBackBtn contentState={contentState} switchQuestion={switchQuestion} switchAnswer={switchAnswer} />
@@ -92,7 +93,7 @@ const EditId = (editId) => {
                     <EditNextBtn contentState={contentState} switchAnswer={switchAnswer} switchSetting={switchSetting} />
                 </FadeTransition>
                 <FadeTransition show={releaseShow && contentState === "setting"}>
-                    <EditReleaseBtn editId={editId} questionValue={questionValue} answerValues={answerValues} smallCateValue={smallCateValue} bigCateValue={bigCateValue} setQuestionValue={setQuestionValue} setAnswerValues={setAnswerValues} setSmallCateValue={setSmallCateValue} setBigCateValue={setBigCateValue} />
+                    <EditReleaseBtn editId={editId} questionValue={questionValue} answerValues={answerValues} card={card} setQuestionValue={setQuestionValue} setAnswerValues={setAnswerValues} setCard={setCard} />
                 </FadeTransition>
             </Layout>
         </>
@@ -104,20 +105,18 @@ export const getStaticPaths = async () => {
     const memoresSnapShot = await getDocs(q);
     const memoresData = memoresSnapShot.docs.map(doc => doc.data());
     const paths = memoresData.map(data => { return {params: {accountId: data.userId, editId: data.id}}});
-    return { paths, fallback: false };
+    return { paths, fallback: true };
 }
 
-// TODO
-export const getStaticProps = async (context) => {
-    const { editId } = context.params;
-    // const q = query(collection(db, "memores"), where("id", "==", editId));
-    // const memoresSnapShot = await getDocs(q)
-    // const memoriRef = doc(db, "memores");
-    // const memoriSnap = await getDoc(memoriRef);
-    // const memori = memoriSnap.exists() ? memoriSnap.data() : null;
+export const getStaticProps = async ({ params }) => {
+    const { editId } = params;
+    const memoriRef = doc(db, "memores", editId);
+    const memoriSnap = await getDoc(memoriRef);
+    const memori = memoriSnap.exists() ? memoriSnap.data() : null;
     return {
         props: {
             editId: editId,
+            memori: memori,
         }
     }
 }
