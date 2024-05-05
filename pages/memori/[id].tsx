@@ -48,12 +48,11 @@ const Memori = (props) => {
     return(
         <>
             <Layout card={card}>
-                <FadeTransition show={!memoriOpen}>
+                {!memoriOpen ? (
                     <Question memori={memori} />
-                </FadeTransition>
-                <FadeTransition show={memoriOpen}>
+                ):(
                     <Answer memori={memori} />
-                </FadeTransition>
+                )}
                 <FadeTransition show={previousMemori !== null && !memoriOpen}>
                     <MemoriBackBtn previousMemori={previousMemori} />
                 </FadeTransition>
