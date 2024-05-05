@@ -27,7 +27,7 @@ export default function Cards(props) {
         <>
             <div className={styles.category}>
                 <ul className={styles["category__list"]}>
-                    {user.userId === router.query.accountId && (
+                    {user && user.userId === router.query.accountId && (
                         <li className={`${styles["category__item"]} ${styles["category__item-setting"]}`}>
                             <Link href="/edit/category">
                                 <Image src={setting} alt="" />
