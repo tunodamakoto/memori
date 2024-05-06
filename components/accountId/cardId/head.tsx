@@ -5,6 +5,7 @@ import styles from "@/styles/accountId/cardId/head.module.scss";
 import { collection, deleteDoc, doc, getDocs, query, where } from "firebase/firestore";
 import { useRouter } from "next/router";
 import { useState } from "react";
+import { EditCard } from "@/components/popup";
 
 export default function Head(props) {
 
@@ -13,8 +14,13 @@ export default function Head(props) {
     const router = useRouter();
 
     const [toggleNav, setToggleNav] = useState(false);
+    const [toggleEdit, setToggleEdit] = useState(false);
     const handleToggleNav = () => {
         setToggleNav(!toggleNav);
+    }
+
+    const handleCardEdit = () => {
+        setToggleEdit(true);
     }
 
     const handleCardDelete = async () => {
@@ -40,7 +46,7 @@ export default function Head(props) {
                         <button className={`${styles["head__edit"]} ${toggleNav ? styles.on : ""}`} onClick={handleToggleNav}></button>
                         <FadeTransition show={toggleNav}>
                             <ul className={styles["head__nav"]}>
-                                <li className={`${styles["head__nav__item"]} ${styles["head__nav__item-edit"]}`}>編集</li>
+                                <li className={`${styles["head__nav__item"]} ${styles["head__nav__item-edit"]}`} onClick={handleCardEdit}>編集</li>
                                 <li className={`${styles["head__nav__item"]} ${styles["head__nav__item-delete"]}`} onClick={handleCardDelete}>削除</li>
                             </ul>
                         </FadeTransition>
@@ -49,6 +55,9 @@ export default function Head(props) {
             </div>
             <p className={styles.text}>{card.explain}</p>
             <p className={styles.cate}>{card.category.name}</p>
+            <FadeTransition show={toggleEdit}>
+                <EditCard setToggleEdit={setToggleEdit} card={card} />
+            </FadeTransition>
         </>
     )
 }

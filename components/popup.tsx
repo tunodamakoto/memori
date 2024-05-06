@@ -302,12 +302,12 @@ export const AddCard = (props) => {
         for (let i = 0; i < cardsSnapShot.size; i++) {
             const doc = cardsSnapShot.docs[i];
             if(doc.data().name === name) {
-                alert("名前がすでに存在します。");
+                alert("名前がすでに存在します");
                 setName("");
                 return;
             }
         }
-        let result = confirm(`「${name}」で作成してもいいでしょか？`);
+        let result = confirm(`「${name}」で作成してもいいでしょうか？`);
         if(result) {
             if(category === "create" && newCategoryName !== ""){
                 await setDoc(doc(db, "categories", uuid), {
@@ -347,7 +347,7 @@ export const AddCard = (props) => {
 
     const handleCreate = async () => {
         if(name === ""){
-            alert("名前を記入してください。")
+            alert("名前を記入してください")
         } else if (category === "non") {
             alert("カテゴリーを選択してください")
         } else if (category === "create" && newCategoryName === "") {
@@ -406,6 +406,163 @@ export const AddCard = (props) => {
                         </FadeTransition>
                         <div className={styles["form__btn"]}>
                             <button onClick={handleCreate}>作成する</button>
+                        </div>
+                    </div>
+                </div>
+                <div className={styles.bg} onClick={handleCancelPopup}></div>
+            </div>
+        </div>
+    )
+}
+
+export const EditCard = (props) => {
+
+    const { setToggleEdit, card } = props;
+    const [categories, setCategories] = useState([]);
+    const [showCategoryForm, setShowCategoryForm] = useState(false);
+    const [name, setName] = useState(card.name);
+    const [explain, setExplain] = useState(card.explain);
+    const [category, setCategory] = useState(card.category.id);
+    const [newCategoryName, setNewCategoryName] = useState("");
+    const [categoryCreateToggle, setCategoryCreateToggle] = useState(false);
+    const [uuid, setUuid] = useState(v4());
+    const router = useRouter();
+
+    const user = useAuth();
+
+    useEffect(() => {
+        const getCategories = async () => {
+            const q = query(collection(db, "categories"), where("userId", "==", user.userId));
+            const categoriesSnapShot = await getDocs(q);
+            const categoriesData = categoriesSnapShot.docs.map(doc => doc.data());
+            setCategories(categoriesData);
+        }
+        getCategories();
+    }, [])
+
+    const handleCancelPopup = () => {
+        setToggleEdit(false);
+    }
+
+    const handleSelectCategory = (e) => {
+        setCategory(e.target.value);
+    };
+
+    useEffect(() => {
+        if(category === "create"){
+            setShowCategoryForm(true);
+        } else {
+            setShowCategoryForm(false);
+        }
+    }, [category]);
+
+    const CreateCard = async () => {
+        const q = query(collection(db, "cards"), where("userId", "==", user.userId));
+        const cardsSnapShot = await getDocs(q);
+        for (let i = 0; i < cardsSnapShot.size; i++) {
+            const doc = cardsSnapShot.docs[i];
+            if(doc.data().name === name) {
+                if(card.name !== name) {
+                    alert("名前がすでに存在します");
+                    setName("");
+                    return;
+                }
+            }
+        }
+        let result = confirm(`「${name}」で保存してもいいでしょうか？`);
+        if(result) {
+            if(category === "create" && newCategoryName !== ""){
+                await setDoc(doc(db, "categories", uuid), {
+                    id: uuid,
+                    name: newCategoryName,
+                    userId: user.userId,
+                })
+                await updateDoc(doc(db, "cards", card.id), {
+                    name: name,
+                    explain: explain,
+                    category: {id: uuid, name: newCategoryName},
+                })
+                setName("");
+                setExplain("");
+                setCategory("");
+                setNewCategoryName("");
+            } else {
+                const filterCategoryName = categories.filter(data => data.id === category);
+                await updateDoc(doc(db, "cards", card.id), {
+                    name: name,
+                    explain: explain,
+                    category: {id: category, name: filterCategoryName[0].name },
+                })
+                setName("");
+                setExplain("");
+                setCategory("");
+            }
+            setToggleEdit(false);
+            router.reload();
+        }
+    }
+
+    const handleCreate = async () => {
+        if(name === ""){
+            alert("名前を記入してください")
+        } else if(category === "non") {
+            alert("カテゴリーを選択してください")
+        } else if(category === "create" && newCategoryName === "") {
+            alert("カテゴリーを選択してください")
+        } else if(category === "create" && newCategoryName !== ""){
+            const q = query(collection(db, "categories"), where("userId", "==", user.userId));
+            const cardsSnapShot = await getDocs(q);
+            for (let i = 0; i < cardsSnapShot.size; i++) {
+                const doc = cardsSnapShot.docs[i];
+                if(doc.data().name === newCategoryName) {
+                    alert("カテゴリー名がすでに存在します");
+                    setNewCategoryName("");
+                    return;
+                } else {
+                    setCategoryCreateToggle(true);
+                }
+            }
+            if(categoryCreateToggle){
+                CreateCard();
+                setCategoryCreateToggle(false);
+            }
+        } else {
+            CreateCard();
+        }
+    }
+
+    return(
+        <div className={styles.module}>
+            <div className={styles.inner}>
+                <div className={styles.content}>
+                    <p className={styles.title}>編集</p>
+                    <div className={styles.form}>
+                        <div className={styles["form__input"]}>
+                            <input type="text" placeholder="名前を記入してください" value={name} onChange={(e) => setName(e.target.value)} />
+                        </div>
+                        <div className={styles["form__textarea"]}>
+                            <textarea
+                                placeholder="説明を記入してください"
+                                value={explain}
+                                onChange={(e) => setExplain(e.target.value)}
+                            ></textarea>
+                        </div>
+                        <div className={styles["form__select"]}>
+                            <select name="category" value={category} onChange={handleSelectCategory}>
+                                <option value="non">カテゴリーを選択</option>
+                                {categories.map((data) => (
+                                    <option value={data.id} key={data.id}>{data.name}</option>
+                                ))}
+                                <option value="create">カテゴリーを作成</option>
+                            </select>
+                        </div>
+                        <FadeTransition show={showCategoryForm}>
+                            <div className={styles["form__input"]}>
+                                <input type="text" placeholder="カテゴリーを作成" onChange={(e) => setNewCategoryName(e.target.value)} />
+                            </div>
+                        </FadeTransition>
+                        <div className={styles["form__btn"]}>
+                            <button onClick={handleCreate}>変更する</button>
                         </div>
                     </div>
                 </div>

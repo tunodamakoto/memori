@@ -4,7 +4,7 @@ import { useEffect, useState } from 'react';
 import FadeTransition from '@/components/animation/FadeTransition';
 import { useRouter } from 'next/router';
 import { useAuth } from '@/context/auth';
-import { deleteDoc, doc, getDoc } from 'firebase/firestore';
+import { collection, deleteDoc, doc, getDoc, getDocs, query, updateDoc } from 'firebase/firestore';
 import { db } from '@/libs/firebase';
 
 export default function Body(props) {
@@ -43,6 +43,14 @@ export default function Body(props) {
         let result = confirm(`「${memori.question}」を削除してもいいでしょうか？`);
         if(result){
             await deleteDoc(doc(db, "memores", id));
+            const q = query(collection(db, "memores"));
+            const memoresSnapShot = await getDocs(q);
+            const memoresData = memoresSnapShot.docs.map(doc => doc.data());
+            const userMemori = memoresData.filter(data => data.userId === user.userId);
+            const count = userMemori.filter(data => data.card.id === memori.card.id).length;
+            await updateDoc(doc(db, "cards", memori.card.id),{
+                memori_num: count,
+            })
             router.reload();
         }
     }
@@ -53,7 +61,7 @@ export default function Body(props) {
                 <p className={styles.empty}>空です。</p>
             ) : (
                 <ul className={styles.list}>
-                    {memores.map((data) => (
+                    {memores.slice().reverse().map((data) => (
                         <li className={styles.item} key={data.id}>
                             <article className={styles.memori}>
                                 <div className={styles["memori__link"]} onClick={() => handleMemori(data.id)}>
