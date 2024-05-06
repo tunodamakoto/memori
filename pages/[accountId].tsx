@@ -11,6 +11,7 @@ const Account = (props) => {
     const user = props.user;
     const categories = props.categories;
     const cards = props.cards;
+    
 
     return(
         <>
