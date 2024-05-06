@@ -5,7 +5,7 @@ import { useAuth } from '@/context/auth';
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
 import { login } from '@/libs/auth';
-import { collection, getDocs, query, where } from 'firebase/firestore';
+import { collection, deleteDoc, doc, getDoc, getDocs, query, updateDoc, where } from 'firebase/firestore';
 import { db } from '@/libs/firebase';
 import { SignInAccountSetting } from '@/components/popup';
 import FadeTransition from './animation/FadeTransition';
@@ -124,51 +124,97 @@ export const HeaderBread = () => {
 }
 
 
-export const HeaderEdit = ({ contentState }) => {
+export const HeaderEdit = ({ contentState, editId, questionValue, answerValues, card }) => {
+
+    const router = useRouter();
+    const user = useAuth();
+
+    const handleBack = async () => {
+        if(questionValue !== "" && answerValues[0].value !== "" && card.name !== undefined){
+            const memoriSnap = await getDoc(doc(db, "memores", editId));
+            const memori = memoriSnap.data();
+            if(memori.question === ""){
+                let result = confirm("入力したフォームを取り消してもいいでしょうか？");
+                if(result){
+                    await deleteDoc(doc(db, "memores", editId));
+                }
+            } else if(memori.question !== "") {
+                await updateDoc(doc(db, "memores", editId),{
+                    question: questionValue,
+                    answer: answerValues,
+                    card: {id: card.id, name: card.name},
+                    category: {id: card.category_id, name: card.category_name},
+                })
+            }
+            router.push(`/${user.userId}`);
+        } else {
+            await deleteDoc(doc(db, "memores", editId));
+            router.push(`/${user.userId}`);
+        }
+    }
+
     return (
         <>
-        <FadeTransition show={contentState === "question"}>
-            <div className={styles.headerEdit}>
-                <div className={styles["headerEdit__inner"]}>
-                    <button className={styles["headerEdit__cancel"]}></button>
-                    <p className={styles["headerEdit__text"]}>問題を記入</p>
+            <FadeTransition show={contentState === "question"}>
+                <div className={styles.headerEdit}>
+                    <div className={styles["headerEdit__inner"]}>
+                        <button className={styles["headerEdit__cancel"]} onClick={handleBack}></button>
+                        <p className={styles["headerEdit__text"]}>問題を記入</p>
+                    </div>
                 </div>
-            </div>
-        </FadeTransition>
-        <FadeTransition show={contentState === "answer"}>
-            <div className={styles.headerEdit}>
-                <div className={styles["headerEdit__inner"]}>
-                    <button className={styles["headerEdit__cancel"]}></button>
-                    <p className={styles["headerEdit__text"]}>解答を記入</p>
+            </FadeTransition>
+            <FadeTransition show={contentState === "answer"}>
+                <div className={styles.headerEdit}>
+                    <div className={styles["headerEdit__inner"]}>
+                        <button className={styles["headerEdit__cancel"]} onClick={handleBack}></button>
+                        <p className={styles["headerEdit__text"]}>解答を記入</p>
+                    </div>
                 </div>
-            </div>
-        </FadeTransition>
-        <FadeTransition show={contentState === "setting"}>
-            <div className={styles.headerEdit}>
-                <div className={styles["headerEdit__inner"]}>
-                    <button className={styles["headerEdit__cancel"]}></button>
-                    <p className={styles["headerEdit__text"]}>設定</p>
+            </FadeTransition>
+            <FadeTransition show={contentState === "setting"}>
+                <div className={styles.headerEdit}>
+                    <div className={styles["headerEdit__inner"]}>
+                        <button className={styles["headerEdit__cancel"]} onClick={handleBack}></button>
+                        <p className={styles["headerEdit__text"]}>設定</p>
+                    </div>
                 </div>
-            </div>
-        </FadeTransition>
-        <FadeTransition show={contentState === "category"}>
-            <div className={styles.headerEdit}>
-                <div className={styles["headerEdit__inner"]}>
-                    <button className={styles["headerEdit__cancel"]}></button>
-                    <p className={styles["headerEdit__text"]}>カテゴリーの編集</p>
-                </div>
-            </div>
-        </FadeTransition>
+            </FadeTransition>
         </>
+    )
+}
+
+export const HeaderEditCate = () => {
+
+    const router = useRouter();
+    const user = useAuth();
+
+    const handleBack = async () => {
+        router.push(`/${user.userId}`);
+    }
+
+    return(
+        <div className={styles.headerEdit}>
+            <div className={styles["headerEdit__inner"]}>
+                <button className={styles["headerEdit__cancel"]} onClick={handleBack}></button>
+                <p className={styles["headerEdit__text"]}>カテゴリーの編集</p>
+            </div>
+        </div>
     )
 }
 
 
 export const HeaderMemori = ({ card }) => {
+    
+    const router = useRouter();
+
+    const handleBack = () => {
+        router.push(`/${card.userId}/${card.id}`);
+    }
+
     return(
         <div className={styles.headerMemori}>
             <div className={styles["headerMemori__inner"]}>
-                <button className={styles["headerMemori__cancel"]}></button>
+                <button className={styles["headerMemori__cancel"]} onClick={handleBack}></button>
                 <p className={styles["headerMemori__text"]}>{card.name}（{card.category.name}）</p>
             </div>
         </div>

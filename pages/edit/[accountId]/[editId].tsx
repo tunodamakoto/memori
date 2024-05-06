@@ -76,7 +76,7 @@ const EditId = (props) => {
 
     return(
         <>
-            <Layout contentState={contentState}>
+            <Layout contentState={contentState} editId={editId} questionValue={questionValue} answerValues={answerValues} card={card}>
                 <FadeTransition show={contentState === "question"}>
                     <Question questionValue={questionValue} handleQuestionValue={handleQuestionValue} />
                 </FadeTransition>

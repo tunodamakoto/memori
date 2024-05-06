@@ -1,6 +1,5 @@
 import Layout from "@/components/layout/main";
 import Profile from "@/components/accountId/profile";
-import Category from "@/components/accountId/category";
 import Cards from "@/components/accountId/cards";
 import { useRouter } from "next/router";
 import { and, collection, doc, getDoc, getDocs, query, where } from "firebase/firestore";

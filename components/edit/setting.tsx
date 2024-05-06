@@ -10,6 +10,7 @@ export default function Setting(props) {
 
     const { questionValue, answerValues, card, setCard, setRelease} = props;
     const [toggleCard, setToggleCard] = useState(false);
+    const [categories, setCategories] = useState([]);
     const [cards, setCards] = useState([]);
     const user = useAuth();
 
@@ -18,6 +19,17 @@ export default function Setting(props) {
     }
 
     useEffect(() => {
+        const getCategories = async () => {
+            try {
+                const q = query(collection(db, "categories"));
+                const categoriesSnapShot = await getDocs(q);
+                const categoriesData = categoriesSnapShot.docs.map(doc => doc.data());
+                const userCategory = categoriesData.filter(data => data.userId === user.userId);
+                setCategories(userCategory)
+            } catch (error) {
+                console.error("Error fetching users:", error)
+            }
+        }
         const getCards = async () => {
             try {
                 const q = query(collection(db, "cards"));
@@ -29,6 +41,7 @@ export default function Setting(props) {
                 console.error("Error fetching users:", error)
             }
         };
+        getCategories();
         getCards();
     },[cards])
 
@@ -50,19 +63,26 @@ export default function Setting(props) {
                     ))}
                 </ul>
                 <div className={styles.form}>
-                    <div className={styles["form__radio"]}>
-                        <ul className={styles["form__radio__list"]}>
-                            {cards.map((data) => (
-                                <li className={styles["form__radio__item"]} key={data.id}>
-                                    <label htmlFor={data.id}>
-                                        <input type="radio" name="cards" id={data.id} onChange={(e) => setCard({id: data.id, name: data.name, category_id: data.category.id, category_name: data.category.name})} checked={data.id === card.id}  />{data.name}
-                                    </label>
-                                </li>                                
-                            ))}
-                        </ul>
-                        <div className={styles["form__radio__add"]}>
-                            <button onClick={handleAddCard}></button>
-                        </div>
+                    <ul className={styles["form__categories"]}>
+                        {categories.slice().reverse().map((data) => (
+                            <li className={styles["form__categories__item"]} key={data.id}>
+                                <p className={styles["form__categories__item__title"]}>{data.name}</p>
+                                <div className={styles["form__radio"]}>
+                                    <ul className={styles["form__radio__list"]}>
+                                        {cards.filter(card => card.category.id === data.id).map((data) => (
+                                            <li className={styles["form__radio__item"]} key={data.id}>
+                                                <label htmlFor={data.id}>
+                                                    <input type="radio" name="cards" id={data.id} onChange={(e) => setCard({id: data.id, name: data.name, category_id: data.category.id, category_name: data.category.name})} checked={data.id === card.id}  />{data.name}
+                                                </label>
+                                            </li>                                
+                                        ))}
+                                    </ul>
+                                </div>
+                            </li>
+                        ))}
+                    </ul>
+                    <div className={styles["form__add"]}>
+                        <button onClick={handleAddCard}></button>
                     </div>
                 </div>
             </div>

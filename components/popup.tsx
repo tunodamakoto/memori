@@ -255,6 +255,7 @@ export const AddCard = (props) => {
     const [categories, setCategories] = useState([]);
     const [showCategoryForm, setShowCategoryForm] = useState(false);
     const [newCategoryName, setNewCategoryName] = useState("");
+    const [categoryCreateToggle, setCategoryCreateToggle] = useState(false);
     const user = useAuth();
     const [uuid, setUuid] = useState(v4());
 
@@ -295,6 +296,55 @@ export const AddCard = (props) => {
         }
     }, [category]);
 
+    const CreateCard = async () => {
+        const q = query(collection(db, "cards"), where("userId", "==", user.userId));
+        const cardsSnapShot = await getDocs(q);
+        for (let i = 0; i < cardsSnapShot.size; i++) {
+            const doc = cardsSnapShot.docs[i];
+            if(doc.data().name === name) {
+                alert("名前がすでに存在します。");
+                setName("");
+                return;
+            }
+        }
+        let result = confirm(`「${name}」で作成してもいいでしょか？`);
+        if(result) {
+            if(category === "create" && newCategoryName !== ""){
+                await setDoc(doc(db, "categories", uuid), {
+                    id: uuid,
+                    name: newCategoryName,
+                    userId: user.userId,
+                })
+                await setDoc(doc(db, "cards", uuid), {
+                    id: uuid,
+                    name: name,
+                    explain: explain,
+                    category: {id: uuid, name: newCategoryName},
+                    userId: user.userId,
+                    memori_num: 0,
+                })
+                setName("");
+                setExplain("");
+                setCategory("");
+                setNewCategoryName("");
+            } else {
+                const filterCategoryName = categories.filter(data => data.id === category);
+                await setDoc(doc(db, "cards", uuid), {
+                    id: uuid,
+                    name: name,
+                    explain: explain,
+                    category: {id: category, name: filterCategoryName[0].name },
+                    userId: user.userId,
+                    memori_num: 0,
+                })
+                setName("");
+                setExplain("");
+                setCategory("");
+            }
+            setToggleCard(false);
+        }
+    }
+
     const handleCreate = async () => {
         if(name === ""){
             alert("名前を記入してください。")
@@ -311,55 +361,16 @@ export const AddCard = (props) => {
                     alert("カテゴリー名がすでに存在します。");
                     setNewCategoryName("");
                     return;
+                } else {
+                    setCategoryCreateToggle(true)
                 }
+            }
+            if(categoryCreateToggle){
+                CreateCard();
+                setCategoryCreateToggle(false);
             }
         } else {
-            const q = query(collection(db, "cards"), where("userId", "==", user.userId));
-            const cardsSnapShot = await getDocs(q);
-            for (let i = 0; i < cardsSnapShot.size; i++) {
-                const doc = cardsSnapShot.docs[i];
-                if(doc.data().name === name) {
-                    alert("名前がすでに存在します。");
-                    setName("");
-                    return;
-                }
-            }
-            let result = confirm(`「${name}」で作成してもいいでしょか？`);
-            if(result) {
-                if(category === "create" && newCategoryName !== ""){
-                    await setDoc(doc(db, "categories", uuid), {
-                        id: uuid,
-                        name: newCategoryName,
-                        userId: user.userId,
-                    })
-                    await setDoc(doc(db, "cards", uuid), {
-                        id: uuid,
-                        name: name,
-                        explain: explain,
-                        category: {id: uuid, name: newCategoryName},
-                        userId: user.userId,
-                        memori_num: 0,
-                    })
-                    setName("");
-                    setExplain("");
-                    setCategory("");
-                    setNewCategoryName("");
-                } else {
-                    const filterCategoryName = categories.filter(data => data.id === category);
-                    await setDoc(doc(db, "cards", uuid), {
-                        id: uuid,
-                        name: name,
-                        explain: explain,
-                        category: {id: category, name: filterCategoryName[0].name },
-                        userId: user.userId,
-                        memori_num: 0,
-                    })
-                    setName("");
-                    setExplain("");
-                    setCategory("");
-                }
-                setToggleCard(false);
-            }
+            CreateCard();
         }
     }
 

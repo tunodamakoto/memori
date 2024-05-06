@@ -1,6 +1,5 @@
 .module {
   width: 100%;
-  text-align: center;
 }
 
 .title {
@@ -40,6 +39,11 @@
   top: 18px;
   left: 10px;
 }
+@media screen and (max-width: 767px) {
+  .form__textarea::before {
+    top: 13px;
+  }
+}
 
 .form__textarea textarea {
   display: block;
@@ -55,7 +59,7 @@
 }
 @media screen and (max-width: 767px) {
   .form__textarea textarea {
-    font-size: 1.6rem;
+    font-size: 1.4rem;
   }
 }
 .form__textarea textarea::-moz-placeholder {
@@ -84,6 +88,7 @@
   border-radius: 24px;
   background-color: var(--btn-bar);
   position: relative;
+  cursor: pointer;
 }
 @media screen and (max-width: 767px) {
   .add button {

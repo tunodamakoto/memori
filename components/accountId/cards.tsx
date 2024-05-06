@@ -37,7 +37,7 @@ export default function Cards(props) {
                     <li className={`${styles["category__item"]} ${activeCategory === null ? styles.on : ''}`}>
                         <button onClick={() => handleTabClick(null)}>全て</button>
                     </li>
-                    {categories.map((data) => (
+                    {categories.slice().reverse().map((data) => (
                         <li className={`${styles["category__item"]} ${activeCategory === data.id ? styles.on : ''}`} key={data.id}>
                             <button onClick={() => handleTabClick(data.id)}>{data.name}</button>
                         </li>                    
@@ -49,7 +49,7 @@ export default function Cards(props) {
                     <p className={styles["card__empty"]}>空です。</p>
                 ):(
                     <ul className={styles["card__list"]}>
-                        {filteredCards.map((data) => (
+                        {filteredCards.slice().reverse().map((data) => (
                             <li className={styles["card__item"]} key={data.id}>
                                 <article className={styles["card__item"]}>
                                     <Link href={`/${url}/${data.id}`}>

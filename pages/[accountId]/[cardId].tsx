@@ -15,7 +15,9 @@ const AccountCard = (props) => {
         <Layout>
             <Head card={card} />
             <Body memores={memores} />
-            <StartBtn memores={memores} card={card} />
+            {memores.length !== 0 && (
+              <StartBtn memores={memores} card={card} />
+            )}
         </Layout>
     </>
   )

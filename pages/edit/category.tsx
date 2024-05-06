@@ -1,4 +1,4 @@
-import Layout from "@/components/layout/edit";
+import Layout from "@/components/layout/editCate";
 import { useState } from "react";
 import Cate from "@/components/edit/cate";
 
@@ -8,7 +8,7 @@ const Category = () => {
 
     return(
         <>
-            <Layout contentState={contentState}>
+            <Layout>
                 <Cate />
             </Layout>
         </>

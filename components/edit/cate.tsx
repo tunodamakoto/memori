@@ -1,7 +1,7 @@
 import styles from "@/styles/edit/cate.module.scss";
 import { CreateCategory, EditCategory } from "@/components/popup"
 import { useEffect, useState } from "react";
-import { collection, getDocs, query } from "firebase/firestore";
+import { collection, deleteDoc, doc, getDocs, query, where } from "firebase/firestore";
 import { db } from "@/libs/firebase";
 import { useAuth } from "@/context/auth";
 import FadeTransition from "../animation/FadeTransition";
@@ -56,6 +56,25 @@ export default function Cate(){
         setValue({ id: id, name: name });
     }
 
+    const handleCateDelete = async (id, name) => {
+        const result = confirm(`「${name}」を削除してもいいでしょうか？（※作成したMEMORIも削除されます）`)
+        if(result) {
+            const memoresSnapShot = await getDocs(query(collection(db, "memores"), where("category.id", "==", id)));
+            const memoresData = memoresSnapShot.docs.map(doc => doc.data());
+            const memores = memoresData.filter(data => data.userId === user.userId);
+            memores.map(async(data) => (
+                await deleteDoc(doc(db, "memores", data.id))
+            ))
+            const cardsSnapShot = await getDocs(query(collection(db, "cards"), where("category.id", "==", id)));
+            const cardsData = cardsSnapShot.docs.map(doc => doc.data());
+            const cards = cardsData.filter(data => data.userId === user.userId);
+            cards.map(async(data) => (
+                await deleteDoc(doc(db, "cards", data.id))
+            ))
+            await deleteDoc(doc(db, "categories", id));
+        }
+    }
+
     return(
         <>
             <div className={styles.module}>
@@ -70,7 +89,7 @@ export default function Cate(){
                             <FadeTransition show={toggleNavs[data.id]}>
                                 <ul className={styles["item__nav"]}>
                                     <li className={`${styles["item__nav__item"]} ${styles["item__nav__item-edit"]}`} onClick={() => handleEdit(data.id, data.name)}>編集</li>
-                                    <li className={`${styles["item__nav__item"]} ${styles["item__nav__item-delete"]}`}>削除</li>
+                                    <li className={`${styles["item__nav__item"]} ${styles["item__nav__item-delete"]}`} onClick={() => handleCateDelete(data.id, data.name)}>削除</li>
                                 </ul>
                             </FadeTransition>
                         </li>

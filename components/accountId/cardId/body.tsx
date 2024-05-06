@@ -3,10 +3,14 @@ import styles from "@/styles/accountId/cardId/body.module.scss";
 import { useEffect, useState } from 'react';
 import FadeTransition from '@/components/animation/FadeTransition';
 import { useRouter } from 'next/router';
+import { useAuth } from '@/context/auth';
+import { deleteDoc, doc, getDoc } from 'firebase/firestore';
+import { db } from '@/libs/firebase';
 
 export default function Body(props) {
 
     const { memores } = props;
+    const user = useAuth();
 
     const [toggleNavs, setToggleNavs] = useState({});
     const router = useRouter();
@@ -29,10 +33,18 @@ export default function Body(props) {
     }
 
     const handleMemori = (id) => {
-        // const startIndex = memores.findIndex(item => item.id === id);
-        // const memoresSpecified = startIndex !== -1 ? memores.slice(startIndex) : [];
         localStorage.setItem('memores', JSON.stringify(memores));
         router.push(`/memori/${id}`);
+    }
+
+    const handleMemoriDelete = async (id) => {
+        const memoriSnap = await getDoc(doc(db, "memores", id));
+        const memori = memoriSnap.data();
+        let result = confirm(`「${memori.question}」を削除してもいいでしょうか？`);
+        if(result){
+            await deleteDoc(doc(db, "memores", id));
+            router.reload();
+        }
     }
 
     return (
@@ -47,15 +59,19 @@ export default function Body(props) {
                                 <div className={styles["memori__link"]} onClick={() => handleMemori(data.id)}>
                                     <h3 className={styles["memori__title"]}>{data.question}</h3>
                                 </div>
-                                <div className={styles["memori__edit"]}>
-                                    <button className={`${styles["memori__edit__btn"]} ${toggleNavs[data.id] ? styles.on : ""}`} onClick={() => handleToggleNav(data.id)}></button>
-                                </div>
-                                <FadeTransition show={toggleNavs[data.id]}>
-                                    <div className={styles["memori__nav"]}>
-                                        <li className={`${styles["memori__nav__item"]} ${styles["memori__nav__item-edit"]}`} onClick={() => router.push(`/edit/${data.userId}/${data.id}`)}>編集</li>
-                                        <li className={`${styles["memori__nav__item"]} ${styles["memori__nav__item-delete"]}`}>削除</li>
-                                    </div>
-                                </FadeTransition>
+                                {user && user.userId === router.query.accountId && (
+                                    <>
+                                        <div className={styles["memori__edit"]}>
+                                            <button className={`${styles["memori__edit__btn"]} ${toggleNavs[data.id] ? styles.on : ""}`} onClick={() => handleToggleNav(data.id)}></button>
+                                        </div>
+                                        <FadeTransition show={toggleNavs[data.id]}>
+                                            <div className={styles["memori__nav"]}>
+                                                <li className={`${styles["memori__nav__item"]} ${styles["memori__nav__item-edit"]}`} onClick={() => router.push(`/edit/${data.userId}/${data.id}`)}>編集</li>
+                                                <li className={`${styles["memori__nav__item"]} ${styles["memori__nav__item-delete"]}`} onClick={() => handleMemoriDelete(data.id)}>削除</li>
+                                            </div>
+                                        </FadeTransition>
+                                    </>
+                                )}
                             </article>
                         </li>                
                     ))}
