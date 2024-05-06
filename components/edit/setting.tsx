@@ -72,7 +72,8 @@ export default function Setting(props) {
                                         {cards.filter(card => card.category.id === data.id).map((data) => (
                                             <li className={styles["form__radio__item"]} key={data.id}>
                                                 <label htmlFor={data.id}>
-                                                    <input type="radio" name="cards" id={data.id} onChange={(e) => setCard({id: data.id, name: data.name, category_id: data.category.id, category_name: data.category.name})} checked={data.id === card.id}  />{data.name}
+                                                    <input type="radio" name="cards" id={data.id} onChange={(e) => setCard({id: data.id, name: data.name, category_id: data.category.id, category_name: data.category.name})} checked={data.id === card.id}  />
+                                                    {data.name}
                                                 </label>
                                             </li>                                
                                         ))}

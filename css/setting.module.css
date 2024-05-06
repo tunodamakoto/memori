@@ -39,7 +39,7 @@
 }
 @media screen and (max-width: 767px) {
   .answer__item {
-    font-size: 1.6rem;
+    font-size: 1.4rem;
   }
 }
 .answer__item::before {
@@ -54,7 +54,6 @@
   top: 15px;
   left: 10px;
 }
-
 .form__categories {
   border-top: 1px solid #7D818F;
   border-bottom: 1px solid #7D818F;
